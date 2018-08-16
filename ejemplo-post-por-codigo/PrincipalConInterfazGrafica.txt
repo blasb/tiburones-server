@@ -1,0 +1,113 @@
+package app;
+
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+/**
+ * This program demonstrates various techniques when using JTextField
+ * @author www.codejava.net
+ *
+ */
+public class SwingJTextFieldDemo extends JFrame {
+
+	//Texto, el boton y clase de post
+	JTextField textField = new JTextField("", 20);
+	JButton button = new JButton("OK");
+	PeticionPost pp;
+	
+	public SwingJTextFieldDemo() throws IOException {
+		super("Demo program for JTextField");
+		setLayout(new FlowLayout());
+		
+		//agrego lo del post
+		this.pp = new PeticionPost("http://localhost/tiburones-server/ejemplo-post-por-codigo/saludar.php");
+
+		// adds event listener which listens to Enter key event
+		textField.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				JOptionPane.showMessageDialog(SwingJTextFieldDemo.this, 
+						"You entered text:\n" + textField.getText());
+			}
+		});
+		
+		// adds key event listener
+		textField.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent event) {
+				String content = textField.getText();
+				if (!content.equals("")) {
+					button.setEnabled(true);
+				} else {
+					button.setEnabled(false);
+				}
+			}			
+		});
+		
+		
+		// adds action listener for the button
+		button.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				
+				String resultado = "";
+				
+				try {
+					pp.add("usuario", textField.getText());
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				try {
+					resultado = pp.getRespuesta();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				JOptionPane.showMessageDialog(SwingJTextFieldDemo.this, 
+						"Content of the text field:\n" + resultado);
+			}
+		});
+		
+		add(textField);
+		add(button);
+		
+		setSize(300, 100);		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);		
+		setVisible(true);
+	}
+
+	
+	public static void main(String[] args) throws IOException {
+		
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					new SwingJTextFieldDemo();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"id":"0",
+    "fecha":"2012-04-23T18:25:43.511Z",
+    "ubicacion":"41°24'12.2\"N 2°10'26.5\"E",
+    "medidas": {
+        "alto":"10",
+        "largo":"25"
+    },
+    "fotos": {
+    	"0":"./muestra0-1photo.jpg",
+    	"1":"./muestra0-2photo.jpg",
+    	"2":"./muestra0-3photo.jpg",
+    	"3":"./muestra0-4photo.jpg"
+    },
+    "audios":{
+    	"0":"./muestra0-1sound.mp3",
+    	"1":"./muestra0-2sound.mp3"
+    }
+}
